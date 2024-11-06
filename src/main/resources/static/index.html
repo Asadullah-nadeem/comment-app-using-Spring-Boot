@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment App</title>
+</head>
+<body>
+<h1>Leave a Comment</h1>
+<form id="commentForm">
+    <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Enter your comments here..."></textarea>
+    <button type="button" onclick="submitComment()">Submit</button>
+</form>
+<h2>Comments:</h2>
+<div id="commentSection"></div>
+
+<script>
+    function submitComment() {
+        const commentText = document.getElementById("comments").value;
+        fetch("http://localhost:8080/comments", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ content: commentText })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert("Comment submitted!");
+                loadComments(); // Refresh the comments
+            })
+            .catch(error => console.error("Error:", error));
+    }
+
+    function loadComments() {
+        fetch("http://localhost:8080/comments")
+            .then(response => response.json())
+            .then(data => {
+                const commentSection = document.getElementById("commentSection");
+                commentSection.innerHTML = "";
+                data.forEach(comment => {
+                    const commentDiv = document.createElement("div");
+                    commentDiv.textContent = comment.content;
+                    commentSection.appendChild(commentDiv);
+                });
+            });
+    }
+    document.addEventListener("DOMContentLoaded", loadComments);
+</script>
+</body>
+</html>

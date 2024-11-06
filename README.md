@@ -1,16 +1,20 @@
-# Getting Started
+#### This project allows users to submit and view comments. It uses Spring Boot with MySQL for storage.
+### Step 1: Create the Database
 
-### Reference Documentation
+First, open your MySQL client and create the `commentsdb` database.
 
-For further reference, please consider the following sections:
+```sql
+CREATE DATABASE commentsdb;
+USE commentsdb;
+```
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.3.5/gradle-plugin/packaging-oci-image.html)
+### Step 2: Create the Comments Table
 
-### Additional Links
+Now, create the `comments` table within the `commentsdb` database. The table will have an `id` column (auto-incremented primary key) and a `content` column for storing comment text.
 
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-
+```sql
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content VARCHAR(500) NOT NULL
+);
+```
